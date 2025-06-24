@@ -1,8 +1,18 @@
 {% extends "base.html" %}
 {% block title %} MAINTENANCE {% endblock %}
-{% block content %}
-<form method="POST"><br>
-    <h3 style="text-align: center;">Add Maintenance Record</h3>
+{% block content %}<br><h1 style="text-align: center; color:darkblue;">MAINTENANCE PAGE</h1><br>
+<div class="accordion" id="userMaintenance">
+<div class="card">
+    <div class="card-header" id="headingAddMaintenance">
+        <h2 class="mb-0">
+            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseAddMaintenance" aria-expanded="false" aria-controls="collapseAddMaintenance">
+                Add New Maintenance
+            </button>
+        </h2>
+    </div>
+<div id="collapseAddMaintenance" class="collapse" aria-labelledby="headingAddMaintenance" data-parent="#userMaintenanceAccordion">
+    <div class="card-body">
+<form method="POST">
     <div class="form-group">
         <label for="maintenance_type">Maintenance Type</label>
         <input type="text" class="form-control" id="maintenance_type" name="maintenance_type" placeholder="Enter Maintenance Type" required>
@@ -17,4 +27,8 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+</div>
+</div>
+</div>
+</div>
 {% endblock %}

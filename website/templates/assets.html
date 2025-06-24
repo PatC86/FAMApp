@@ -1,8 +1,18 @@
 {% extends "base.html" %}
 {% block title %} ASSETS {% endblock %}
-{% block content %}
-<form method="POST"><br>
-    <h3 style="text-align: center;">Add Asset</h3>
+{% block content %}<br><h1 style="text-align: center; color:darkblue;">ASSETS PAGE</h1><br>
+<div class="accordion" id="userAssets">
+<div class="card">
+    <div class="card-header" id="headingAddAsset">
+        <h2 class="mb-0">
+            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseAddAsset" aria-expanded="false" aria-controls="collapseAddAsset">
+                Add New Asset
+            </button>
+        </h2>
+    </div>
+<div id="collapseAddAsset" class="collapse" aria-labelledby="headingAddAsset" data-parent="#userAssetsAccordion">
+    <div class="card-body">
+<form method="POST">
     <div class="form-group">
         <label for="description">Asset Description</label>
         <input type="text" class="form-control" id="description" name="description" placeholder="Enter Asset Description">
@@ -25,4 +35,8 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+</div>
+</div>
+</div>
+</div>
 {% endblock %}
