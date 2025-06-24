@@ -118,6 +118,14 @@
                         return confirm("Are you sure you want to log off??");
                     }
     </script>
+    <script>
+    function confirmRoleChange(form, newRole) {
+            const confirmed = confirm(`Please confirm you do want to change to: '${newRole}'?`);
+            if (confirmed) {
+                form.submit();  // Submit the form if confirmed
+            }
+        }
+    </script>
     </div>
 </body>
 </html>

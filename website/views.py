@@ -4,10 +4,12 @@
 # Update: 24/06/2025
 # Purpose: Define views/routes for the application
 
-from .models import Assetclass, Asset, Maintenance
-from flask import Blueprint, render_template, request, flash
+from .models import Assetclass, Asset, Maintenance, User
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_required, current_user
 from . import db
+from .userrolewrappers import admin_required
+from .auth import ROLES, useradmin
 
 ASSET_CLASS_CODE_LENGTH = 2
 MINIMUM_DESC_LENGTH = 5
@@ -86,4 +88,24 @@ def maintenance():
             flash('Maintenance has been successfully created', category='success')
 
     return render_template("maintenance.html", user=current_user)
+
+@views.route('/update_role/<int:id>', methods=['POST'])
+@login_required
+@admin_required
+def update_role(id):
+    UserList = db.session.query(User.id, User.username, User.first_name, User.surname, User.role).all()
+    NewRole = request.form.get('role')
+    if NewRole not in ROLES:
+        flash('Role does not exist', category='error')
+
+    changinguser = User.query.get(id)
+    if changinguser:
+        changinguser.role = NewRole
+        db.session.commit()
+        flash('Role has been successfully updated', category='success')
+    else:
+        flash('User not found', category='error')
+
+    return render_template('useradmin.html', user=current_user, user_list=UserList)
+
 

@@ -53,6 +53,8 @@
             <th>First Name</th>
             <th>Surname</th>
             <th>Role</th>
+            <th>Change Role</th>
+            <th>Remove User</th>
         </tr>
     </thead>
     <tbody>
@@ -62,6 +64,16 @@
             <td>{{user.first_name}}</td>
             <td>{{user.surname}}</td>
             <td>{{user.role}}</td>
+            <td>
+                <form action="{{ url_for('views.update_role', id=user.id) }}" method="POST">
+                    <select name="role" onchange="confirmRoleChange(this.form, this.value)">
+                        <option value="">Select Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="facilities">Facilities</option>
+                    </select>
+                </form>
+            </td>
+            <td>remove user button</td>
         </tr>
         {% endfor %}
     </tbody>
