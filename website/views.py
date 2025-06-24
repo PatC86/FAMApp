@@ -49,7 +49,7 @@ def assets():
     return render_template("assets.html", user=current_user)
 
 @views.route('/assetclassadmin', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def assetclassadmin():
     if request.method == 'POST':
         AssetClassCode = request.form.get('asset_class_code')
@@ -65,8 +65,8 @@ def assetclassadmin():
             db.session.commit()
             flash('Asset class code has successfully been created', category='success')
 
-
-    return render_template("assetclassadmin.html", user=current_user)
+    AssetClassList = db.session.query(Assetclass).all()
+    return render_template("assetclassadmin.html", user=current_user, asset_class_list=AssetClassList)
 
 @views.route('/maintenance', methods=['GET', 'POST'])
 @login_required
@@ -121,5 +121,19 @@ def delete_user(id):
 
     UserList = db.session.query(User.id, User.username, User.first_name, User.surname, User.role).all()
     return render_template('useradmin.html', user=current_user, user_list=UserList)
+
+@views.route('/delete_asset_class/<class_code>', methods=['POST'])
+def delete_asset_class(class_code):
+    DeleteAssetClass = Assetclass.query.get(class_code)
+    if DeleteAssetClass:
+        db.session.delete(DeleteAssetClass)
+        db.session.commit()
+        flash('Asset class has been successfully deleted', category='success')
+    else:
+        flash('Asset class not found', category='error')
+
+    AssetClassList = db.session.query(Assetclass).all()
+    return render_template('assetclassadmin.html', user=current_user, asset_class_list=AssetClassList)
+
 
 

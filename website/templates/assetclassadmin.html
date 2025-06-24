@@ -27,4 +27,26 @@
 </div>
 </div>
 </div>
+<br>
+<br>
+<table>
+    <thead>
+        <tr>
+            <th>Asset Class Code</th>
+            <th>Asset Class Description</th>
+            <th>Remove Asset Class</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for assetclass in asset_class_list %}
+        <tr>
+            <td>{{ assetclass.class_code }}</td>
+            <td>{{ assetclass.class_desc }}</td>
+            <td>
+                <form action="{{ url_for('views.delete_asset_class', class_code=assetclass.class_code) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove this asset class?');">
+                    <button type="submit" class="btn btn-danger">Remove Asset Class</button>
+                </form>
+        <tr>
+{% endfor %}
+</table>
 {% endblock %}
