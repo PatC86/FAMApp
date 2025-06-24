@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block title %} USER ADMIN {% endblock %}
 {% block content %}USER ADMIN PAGE<br>
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#addUserForm" aria-expanded="false" aria-controls="addUserForm">
+Add User
+</button>
+<div class="collapse" id="addUserForm">
 <form method="POST">
     <h3 style="text-align: center;">Add User</h3>
     <div class="form-group">
@@ -30,4 +34,5 @@
     <br />
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+</div>
 {% endblock %}
