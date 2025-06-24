@@ -48,6 +48,8 @@ def logout():
 @auth.route('/useradmin', methods=['GET', 'POST'])
 @login_required
 def useradmin():
+    UserList = db.session.query(User.username, User.first_name, User.surname, User.role).all()
+
     if request.method == 'POST':
         Username = request.form.get('username')
         FirstName = request.form.get('first_name')
@@ -73,4 +75,4 @@ def useradmin():
             db.session.commit()
             flash('Account created successfully', category='success')
 
-    return render_template('useradmin.html', user=current_user)
+    return render_template('useradmin.html', user=current_user, user_list=UserList)
