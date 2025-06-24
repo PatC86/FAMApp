@@ -1,3 +1,20 @@
 {% extends "base.html" %}
 {% block title %} MAINTENANCE {% endblock %}
-{% block content %}ASSET MAINTENANCE{% endblock %}
+{% block content %}
+<form method="POST"><br>
+    <h3 style="text-align: center;">Add Maintenance Record</h3>
+    <div class="form-group">
+        <label for="maintenance_type">Maintenance Type</label>
+        <input type="text" class="form-control" id="maintenance_type" name="maintenance_type" placeholder="Enter Maintenance Type" required>
+    </div>
+    <div class="form-group">
+        <label for="maintenance_desc">Maintenance Description</label>
+        <input type="text" class="form-control" id="maintenance_desc" name="maintenance_desc" placeholder="Enter Maintenance Description">
+    </div>
+    <div class="form-group">
+        <label for="asset_id">Asset Number</label>
+        <input type="text" class="form-control" id="asset_id" name="asset_id" placeholder="Enter Asset Number">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}
