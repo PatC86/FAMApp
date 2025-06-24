@@ -90,10 +90,9 @@ def maintenance():
     return render_template("maintenance.html", user=current_user)
 
 @views.route('/update_role/<int:id>', methods=['POST'])
-@login_required
 @admin_required
 def update_role(id):
-    UserList = db.session.query(User.id, User.username, User.first_name, User.surname, User.role).all()
+
     NewRole = request.form.get('role')
     if NewRole not in ROLES:
         flash('Role does not exist', category='error')
@@ -105,7 +104,22 @@ def update_role(id):
         flash('Role has been successfully updated', category='success')
     else:
         flash('User not found', category='error')
+    UserList = db.session.query(User.id, User.username, User.first_name, User.surname, User.role).all()
+    return render_template('useradmin.html', user=current_user, user_list=UserList)
 
+@views.route('/delete_user/<int:id>', methods=['POST'])
+@admin_required
+def delete_user(id):
+
+    DeleteUser = User.query.get(id)
+    if DeleteUser:
+        db.session.delete(DeleteUser)
+        db.session.commit()
+        flash('User has been successfully deleted', category='success')
+    else:
+        flash('Error user not found', category='error')
+
+    UserList = db.session.query(User.id, User.username, User.first_name, User.surname, User.role).all()
     return render_template('useradmin.html', user=current_user, user_list=UserList)
 
 
