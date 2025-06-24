@@ -14,3 +14,13 @@ views = Blueprint('views', __name__)
 def home():
     return render_template("home.html", user=current_user)
 
+@views.route('/assets')
+@login_required
+def assets():
+    return render_template("assets.html", user=current_user)
+
+@views.route('/assetclassadmin')
+@login_required
+def assetclassadmin():
+    return render_template("assetclassadmin.html", user=current_user)
+
