@@ -39,4 +39,30 @@
 </div>
 </div>
 </div>
+<table>
+    <thead>
+        <tr>
+            <th>Asset Number</th>
+            <th>Asset Description</th>
+            <th>Location</th>
+            <th>Status</th>
+            <th>Serial Number</th>
+            <th>Class</th>
+            <th>Class Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for asset, assetclass in asset_list %}
+        <tr>
+            <td>{{asset.id}}</td>
+            <td>{{asset.description}}</td>
+            <td>{{asset.location}}</td>
+            <td>{{asset.status}}</td>
+            <td>{{asset.serial_number}}</td>
+            <td>{{asset.class_code_id}}</td>
+            <td>{{assetclass.class_desc}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

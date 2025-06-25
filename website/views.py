@@ -46,7 +46,8 @@ def assets():
             db.session.commit()
             flash('Asset created', category='success')
 
-    return render_template("assets.html", user=current_user)
+    AssetList = db.session.query(Asset, Assetclass).join(Assetclass, Asset.class_code_id == Assetclass.class_code).all()
+    return render_template("assets.html", user=current_user, asset_list=AssetList)
 
 @views.route('/assetclassadmin', methods=['GET', 'POST'])
 @admin_required
@@ -86,8 +87,9 @@ def maintenance():
             db.session.add(new_maintenance)
             db.session.commit()
             flash('Maintenance has been successfully created', category='success')
-
-    return render_template("maintenance.html", user=current_user)
+    MaintenanceList = db.session.query(Maintenance, Asset, Assetclass).join(Asset, Maintenance.asset_id == Asset.id).join(Assetclass, Asset.class_code_id == Assetclass.class_code).all()
+    print(MaintenanceList)
+    return render_template("maintenance.html", user=current_user, maintenance_list=MaintenanceList)
 
 @views.route('/update_role/<int:id>', methods=['POST'])
 @admin_required

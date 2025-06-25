@@ -31,4 +31,32 @@
 </div>
 </div>
 </div>
+<table>
+    <thead>
+        <tr>
+            <th>Maintenance ID</th>
+            <th>Maintenance Type</th>
+            <th>Maintenance Description</th>
+            <th>Date</th>
+            <th>Asset ID</th>
+            <th>Asset Description</th>
+            <th>Asset Class</th>
+            <th>Remove Maintenance</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for maintenance, asset, assetclass in maintenance_list %}
+        <tr>
+            <td>{{ maintenance.id }}</td>
+            <td>{{ maintenance.maintenance_type }}</td>
+            <td>{{ maintenance.description }}</td>
+            <td>{{ maintenance.date }}</td>
+            <td>{{ asset.id }}</td>
+            <td>{{ asset.description }}</td>
+            <td>{{ assetclass.class_desc }}</td>
+            <td>Remove Maintenance</td>
+        <tr>
+{% endfor %}
+</tbody>
+</table>
 {% endblock %}
