@@ -11,11 +11,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 import logging
 
+from .userrolewrappers import admin_required
+
 MIN_USERNAME_LENGTH = 5
 MIN_FIRST_NAME_LENGTH = 2
 MIN_SURNAME_LENGTH = 2
 PASSWORD_REGEX = r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'
-ROLES = ['admin', 'user', 'facilities']
+ROLES = ['admin', 'facilities']
 
 auth = Blueprint('auth', __name__)
 
@@ -46,10 +48,9 @@ def logout():
     return redirect(url_for('auth.login'))
 
 @auth.route('/useradmin', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def useradmin():
     UserList = db.session.query(User.id, User.username, User.first_name, User.surname, User.role).all()
-    RolesList = ROLES
 
     if request.method == 'POST':
         Username = request.form.get('username')

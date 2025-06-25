@@ -125,6 +125,7 @@ def delete_user(id):
     return render_template('useradmin.html', user=current_user, user_list=UserList)
 
 @views.route('/delete_asset_class/<class_code>', methods=['POST'])
+@admin_required
 def delete_asset_class(class_code):
     DeleteAssetClass = Assetclass.query.get(class_code)
     if DeleteAssetClass:
