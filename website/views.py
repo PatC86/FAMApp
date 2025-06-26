@@ -3,6 +3,7 @@
 # Date: 22/06/2025
 # Update: 24/06/2025
 # Purpose: Define views/routes for the application
+from unicodedata import category
 
 from .models import Assetclass, Asset, Maintenance, User
 from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
@@ -184,6 +185,30 @@ def edit_asset_class(class_code):
 
     AssetClassList = db.session.query(Assetclass).all()
     return render_template('assetclassadmin.html', user=current_user, asset_class_list=AssetClassList)
+
+@views.route('/edit_maintenance/<int:record_id>', methods=['POST'])
+@login_required
+def edit_maintenance(record_id):
+
+    NewType = request.form.get('maintenance_type')
+    NewDesc = request.form.get('maintenance_desc')
+    NewAsset = request.form.get('asset_id')
+
+    EditMaintenance = Maintenance.query.get(record_id)
+    if EditMaintenance:
+        EditMaintenance.maintenance_type = NewType
+        EditMaintenance.description      = NewDesc
+        EditMaintenance.asset_id         = NewAsset
+        db.session.commit()
+        flash('Maintenance updated successfully', 'success')
+
+    else:
+        flash('Maintenance not found', category='error')
+    return redirect(url_for('views.maintenance'))
+
+
+
+
 
 
 

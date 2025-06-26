@@ -44,7 +44,7 @@
             <td>{{ assetclass.class_code }}</td>
             <td><input type="text" name="asset_class_desc" value="{{ assetclass.class_desc }}" disabled></td>
             <td>
-                <button class="btn btn-sm btn-primary" data-editing="false" onclick="toggleEdit(this, '{{ assetclass.class_code }}', ['asset_class_desc'], '/edit_asset_class')">
+                <button class="btn btn-sm btn-primary" data-editing="false" onclick="toggleEdit(this, '{{ assetclass.class_code }}', ['asset_class_desc'], '/edit_asset_class', {{ assetclass.class_code }})">
                     Edit
                 </button>
             </td>

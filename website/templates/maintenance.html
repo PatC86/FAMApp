@@ -41,26 +41,75 @@
             <th>Asset ID</th>
             <th>Asset Description</th>
             <th>Asset Class</th>
+            <th>Save Edit</th>
             <th>Remove Maintenance</th>
         </tr>
     </thead>
     <tbody>
-        {% for maintenance, asset, assetclass in maintenance_list %}
-        <tr>
-            <td>{{ maintenance.id }}</td>
-            <td>{{ maintenance.maintenance_type }}</td>
-            <td>{{ maintenance.description }}</td>
-            <td>{{ maintenance.date }}</td>
-            <td>{{ asset.id }}</td>
-            <td>{{ asset.description }}</td>
-            <td>{{ assetclass.class_desc }}</td>
-            <td>
-                <form action="{{ url_for('views.delete_maintenance', id=maintenance.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove this maintenance?')">
-                    <button type="submit" class="btn btn-danger">Remove Maintenance</button>
-                </form>
-            </td>
-        <tr>
-{% endfor %}
+  {% for maintenance, asset, assetclass in maintenance_list %}
+  <tr>
+    <form
+      action="{{ url_for('views.edit_maintenance', record_id=maintenance.id) }}"
+      method="POST"
+      class="d-flex w-100 align-items-center"
+      onsubmit="return confirm('Are you sure?')"
+    >
+
+      <td class="align-middle">{{ maintenance.id }}</td>
+
+      <td class="align-middle">
+        <input
+          name="maintenance_type"
+          type="text"
+          class="form-control form-control-sm"
+          value="{{ maintenance.maintenance_type }}"
+        >
+      </td>
+      <td class="align-middle">
+        <input
+          name="maintenance_desc"
+          type="text"
+          class="form-control form-control-sm"
+          value="{{ maintenance.description }}"
+        >
+      </td>
+
+      <td class="align-middle">{{ maintenance.date }}</td>
+
+      <td class="align-middle">
+        <input
+          name="asset_id"
+          type="text"
+          class="form-control form-control-sm"
+          value="{{ asset.id }}"
+        >
+      </td>
+
+      <td class="align-middle">{{ asset.description }}</td>
+      <td class="align-middle">{{ assetclass.class_desc }}</td>
+
+
+      <td class="align-middle">
+        <button type="submit" class="btn btn-sm btn-success">
+          Save
+        </button>
+      </td>
+
+      <td class="align-middle">
+        <form
+          action="{{ url_for('views.delete_maintenance', id=maintenance.id) }}"
+          method="POST"
+          onsubmit="return confirm('Are you sure?')"
+        >
+          <button type="submit" class="btn btn-sm btn-danger">
+            Remove
+          </button>
+        </form>
+      </td>
+    </form>
+  </tr>
+  {% endfor %}
 </tbody>
+
 </table>
 {% endblock %}
