@@ -206,6 +206,29 @@ def edit_maintenance(record_id):
         flash('Maintenance not found', category='error')
     return redirect(url_for('views.maintenance'))
 
+@views.route('/edit_asset/<int:asset_id>', methods=['POST'])
+@login_required
+def edit_asset(asset_id):
+    NewDesc = request.form.get('description')
+    NewLocation  = request.form.get('location')
+    NewStatus = request.form.get('status')
+    NewSerial = request.form.get('serial_number')
+    NewClass  = request.form.get('class_code')
+
+    EditAsset = Asset.query.get(asset_id)
+    if EditAsset:
+        EditAsset.description = NewDesc
+        EditAsset.location = NewLocation
+        EditAsset.status = NewStatus
+        EditAsset.serial_number = NewSerial
+        EditAsset.class_code_id = NewClass
+        db.session.commit()
+        flash('Asset updated successfully', 'success')
+
+    else:
+        flash('Asset not found', category='error')
+
+    return redirect(url_for('views.assets'))
 
 
 

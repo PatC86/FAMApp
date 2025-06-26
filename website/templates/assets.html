@@ -49,26 +49,87 @@
             <th>Serial Number</th>
             <th>Class</th>
             <th>Class Description</th>
+            <th>Save Edit</th>
             <th>Remove Asset</th>
         </tr>
     </thead>
-    <tbody>
-        {% for asset, assetclass in asset_list %}
-        <tr>
-            <td>{{ asset.id }}</td>
-            <td>{{ asset.description }}</td>
-            <td>{{ asset.location }}</td>
-            <td>{{ asset.status }}</td>
-            <td>{{ asset.serial_number }}</td>
-            <td>{{ asset.class_code_id }}</td>
-            <td>{{ assetclass.class_desc }}</td>
-            <td>
-                <form action="{{ url_for('views.delete_asset', id=asset.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this asset?');">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
+     <tbody>
+    {% for asset, assetclass in asset_list %}
+    <tr>
+
+      <form
+        action="{{ url_for('views.edit_asset', asset_id=asset.id) }}"
+        method="POST"
+        class="d-flex w-100 align-items-center"
+        onsubmit="return confirm('Are you sure?')"
+      >
+
+        <td class="align-middle">{{ asset.id }}</td>
+
+
+        <td class="align-middle">
+          <input
+            name="description"
+            type="text"
+            class="form-control form-control-sm"
+            value="{{ asset.description }}"
+          >
+        </td>
+        <td class="align-middle">
+          <input
+            name="location"
+            type="text"
+            class="form-control form-control-sm"
+            value="{{ asset.location }}"
+          >
+        </td>
+        <td class="align-middle">
+          <input
+            name="status"
+            type="text"
+            class="form-control form-control-sm"
+            value="{{ asset.status }}"
+          >
+        </td>
+        <td class="align-middle">
+          <input
+            name="serial_number"
+            type="text"
+            class="form-control form-control-sm"
+            value="{{ asset.serial_number }}"
+          >
+        </td>
+        <td class="align-middle">
+          <input
+            name="class_code"
+            type="text"
+            class="form-control form-control-sm"
+            value="{{ asset.class_code_id }}"
+          >
+        </td>
+
+        <td class="align-middle">{{ assetclass.class_desc }}</td>
+
+        <td class="align-middle">
+          <button type="submit" class="btn btn-sm btn-success">
+            Save
+          </button>
+        </td>
+      </form>
+
+      <td class="align-middle">
+        <form
+          action="{{ url_for('views.delete_asset', id=asset.id) }}"
+          method="POST"
+          onsubmit="return confirm('Are you sure you want to delete this asset?');"
+        >
+          <button type="submit" class="btn btn-sm btn-danger">
+            Delete
+          </button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
 </table>
 {% endblock %}
