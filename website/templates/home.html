@@ -1,3 +1,9 @@
 {% extends "base.html" %}
-{% block title %} FACILITIES ASSET MANAGEMENT APP {% endblock %}
-{% block content %}<br><h1 style="text-align: center; color:darkblue;">HOME</h1><br>{% endblock %}
+{% block title %} FACILITIES ASSET MAINTENANCE APP {% endblock %}
+{% block content %}<br><h1 style="text-align: center; color:darkblue;">HOME</h1><br>
+{% if user.is_authenticated %}
+Hello {{ user.first_name }} and welcome to the Southern Water Facilities Asset Maintenance Application.
+The purpose of this application is to allow our facilities team to record assets and maintenance that is
+not currently stored on the Operational Asset Management application.
+{% endif %}
+{% endblock %}

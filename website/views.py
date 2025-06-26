@@ -88,7 +88,6 @@ def maintenance():
             db.session.commit()
             flash('Maintenance has been successfully created', category='success')
     MaintenanceList = db.session.query(Maintenance, Asset, Assetclass).join(Asset, Maintenance.asset_id == Asset.id).join(Assetclass, Asset.class_code_id == Assetclass.class_code).all()
-    print(MaintenanceList)
     return render_template("maintenance.html", user=current_user, maintenance_list=MaintenanceList)
 
 @views.route('/update_role/<int:id>', methods=['POST'])
