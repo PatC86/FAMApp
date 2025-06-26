@@ -136,18 +136,20 @@
     function toggleEdit(button, rowId, fieldNames, saveEndpoint) {
         const row = document.querySelector(`#${rowId}`);
         const inputs = row.querySelectorAll('input, select');
-        const isEditing = button.textContent === 'Edit';
+        const isEditing = button.dataset.editing !== 'true';
 
         inputs.forEach(input => input.disabled = !isEditing);
 
         if (isEditing) {
             button.textContent = 'Save';
-            button.classList.add('btn-danger')
+            button.classList.add('btn-danger');
             button.classList.remove('btn-primary');
+            button.dataset.editing = 'true';
         } else {
             button.textContent = 'Edit';
-            button.classList.remove('btn-danger')
+            button.classList.remove('btn-danger');
             button.classList.add('btn-primary');
+            button.dataset.editing = 'false';
 
             const data = {};
             fieldNames.forEach(field => {
@@ -174,7 +176,7 @@
             }
         });
     }
-    </script>
-    </div>
+</script>
+</div>
 </body>
 </html>
