@@ -137,5 +137,33 @@ def delete_asset_class(class_code):
     AssetClassList = db.session.query(Assetclass).all()
     return render_template('assetclassadmin.html', user=current_user, asset_class_list=AssetClassList)
 
+@views.route('/delete_asset/<int:id>', methods=['POST'])
+@login_required
+def delete_asset(id):
+    DeleteAsset = Asset.query.get(id)
+    if DeleteAsset:
+        db.session.delete(DeleteAsset)
+        db.session.commit()
+        flash('Asset has been successfully deleted', category='success')
+    else:
+        flash('Asset not found', category='error')
+    AssetList = db.session.query(Asset, Assetclass).join(Assetclass, Asset.class_code_id == Assetclass.class_code).all()
+    return render_template('assets.html', user=current_user, asset_list=AssetList)
+
+@views.route('/delete_maintenance/<int:id>', methods=['POST'])
+@login_required
+def delete_maintenance(id):
+    DeleteMaintenance = Maintenance.query.get(id)
+    if DeleteMaintenance:
+        db.session.delete(DeleteMaintenance)
+        db.session.commit()
+        flash('Maintenance has been successfully deleted', category='success')
+    else:
+        flash('Maintenance not found', category='error')
+    MaintenanceList = db.session.query(Maintenance, Asset, Assetclass).join(Asset,
+                                                                            Maintenance.asset_id == Asset.id).join(
+        Assetclass, Asset.class_code_id == Assetclass.class_code).all()
+    return render_template("maintenance.html", user=current_user, maintenance_list=MaintenanceList)
+
 
 

@@ -54,7 +54,11 @@
             <td>{{ asset.id }}</td>
             <td>{{ asset.description }}</td>
             <td>{{ assetclass.class_desc }}</td>
-            <td>Remove Maintenance</td>
+            <td>
+                <form action="{{ url_for('views.delete_maintenance', id=maintenance.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to remove this maintenance?')">
+                    <button type="submit" class="btn btn-danger">Remove Maintenance</button>
+                </form>
+            </td>
         <tr>
 {% endfor %}
 </tbody>
