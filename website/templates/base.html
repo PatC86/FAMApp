@@ -132,6 +132,49 @@
             }
         }
     </script>
+    <script>
+    function toggleEdit(button, rowId, fieldNames, saveEndpoint) {
+        const row = document.querySelector(`#${rowId}`);
+        const inputs = row.querySelectorAll('input, select');
+        const isEditing = button.textContent === 'Edit';
+
+        inputs.forEach(input => input.disabled = !isEditing);
+
+        if (isEditing) {
+            button.textContent = 'Save';
+            button.classList.add('btn-danger')
+            button.classList.remove('btn-primary');
+        } else {
+            button.textContent = 'Edit';
+            button.classList.remove('btn-danger')
+            button.classList.add('btn-primary');
+
+            const data = {};
+            fieldNames.forEach(field => {
+                const fieldEl = row.querySelector(`[name="${field}"]`);
+                if (fieldEl) data[field] = fieldEl.value;
+            });
+
+            saveRow(rowId, data, saveEndpoint);
+        }
+    }
+
+    function saveRow(rowId, data, endpoint) {
+        fetch(`${endpoint}/${rowId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(response => {
+            if (response.ok) {
+                alert('Changes saved successfully.');
+            } else {
+                alert('Error saving changes.');
+            }
+        });
+    }
+    </script>
     </div>
 </body>
 </html>

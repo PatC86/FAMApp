@@ -5,7 +5,7 @@
 # Purpose: Define views/routes for the application
 
 from .models import Assetclass, Asset, Maintenance, User
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_required, current_user
 from . import db
 from .userrolewrappers import admin_required
@@ -164,6 +164,26 @@ def delete_maintenance(id):
                                                                             Maintenance.asset_id == Asset.id).join(
         Assetclass, Asset.class_code_id == Assetclass.class_code).all()
     return render_template("maintenance.html", user=current_user, maintenance_list=MaintenanceList)
+
+@views.route('/edit_asset_class/<class_code>', methods=['POST'])
+@admin_required
+def edit_asset_class(class_code):
+    NewData = request.get_json()
+    print("Received new data:", NewData)
+    print("Class code:", class_code)
+
+    EditAssetClass = Assetclass.query.get(class_code)
+
+    if EditAssetClass:
+        EditAssetClass.class_desc = NewData['asset_class_desc']
+        db.session.commit()
+        print("Asset class description:", EditAssetClass.class_desc)
+        flash('Asset class description has been successfully updated', category='success')
+    else:
+        flash('Asset class not found', category='error')
+
+    AssetClassList = db.session.query(Assetclass).all()
+    return render_template('assetclassadmin.html', user=current_user, asset_class_list=AssetClassList)
 
 
 
